@@ -256,6 +256,8 @@ search:
         - name: re_replace
           args: ['(?i)Japanese\s*\(Japan\)', 'Japanese']
         - name: re_replace
+          args: ['\b([^,]+\w)\b(.+?),\s*\1\b', '$1$2']
+        - name: re_replace
           args: ['\b([^,]+)(?:,\s*\1)+', '$1']
         - name: re_replace
           args: ['^,\s*|,\s*$', '']
@@ -302,7 +304,18 @@ search:
           args: ['\s*,\s*', ', ']
 
     languages_title:
-      text: '{{ if eq .Config.title_language_mode "none" }}{{ else }}{{ if eq .Config.title_language_mode "br_only" }}{{ .Result.languages_title_br }}{{ else }}{{ if eq .Config.title_language_mode "br_en" }}{{ .Result.languages_title_br_en }}{{ else }}{{ if eq .Config.title_language_mode "br_en_jp" }}{{ .Result.languages_title_br_en_jp }}{{ else }}{{ .Result.languages_title_all }}{{ end }}{{ end }}{{ end }}{{ end }}'
+      text: '{{ .Config.title_language_mode }}'
+      filters:
+        - name: replace
+          args: ['br_en_jp', '{{ .Result.languages_title_br_en_jp }}']
+        - name: replace
+          args: ['br_en', '{{ .Result.languages_title_br_en }}']
+        - name: replace
+          args: ['br_only', '{{ .Result.languages_title_br }}']
+        - name: replace
+          args: ['all', '{{ .Result.languages_title_all }}']
+        - name: replace
+          args: ['none', '']
 
     languages_suffix:
       text: '{{ .Result.languages_title }}'
