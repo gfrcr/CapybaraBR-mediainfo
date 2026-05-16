@@ -95,7 +95,7 @@ settings:
       none: Do not append audio languages
 
 login:
-  path: /api/torrents
+  path: api/torrents
   method: get
   inputs: {} # TODO: remove in v10
   error:
@@ -223,11 +223,19 @@ search:
         - name: re_replace
           args: ['(?i)\b(PT[-_. ]?BR|BR[-_. ]?PT|Portugu[eê]s\s*Brasil(?:eiro)?|Brazilian\s*Portuguese|Portuguese\s*BR|Portuguese-BR)\b', 'Portuguese (Brazil)']
         - name: re_replace
+          args: ['(?i)\b(PT[-_. ]?PT|Portugu[eê]s\s*Portugal|Portuguese\s*Portugal|European\s*Portuguese)\b', 'Portuguese (Portugal)']
+        - name: re_replace
           args: ['(?i)\b(ES[-_. ]?LA|LATAM|Latin\s*American\s*Spanish|Spanish\s*Latino|Spanish\s*\(Latin\s*America\))\b', 'Spanish (Latino)']
+        - name: re_replace
+          args: ['(?i)\b(Chinese\s*Simplified|Simplified\s*Chinese)\b', 'Chinese (Simplified)']
+        - name: re_replace
+          args: ['(?i)\b(Chinese\s*Traditional|Traditional\s*Chinese)\b', 'Chinese (Traditional)']
+        - name: re_replace
+          args: ['(?i)\b(French\s*Canadian|Canadian\s*French)\b', 'French (Canada)']
         - name: re_replace
           args: ['(?i)(JA[-_. ]?JP|JPN|Japanese\s*\(Japan\)|Japon[eê]s|日本語)', 'Japanese']
         - name: re_replace
-          args: ['(?i)((?:Portuguese\s*\(Brazil\)|Spanish\s*\(Latino\)|French\s*\(Canada\)|Chinese\s*\(Simplified\)|Chinese\s*\(Traditional\)|Norwegian\s*Bokm[aå]l|Norwegian\s*Nynorsk|English\s*\(US\)|English\s*\(GB\)|English\s*\(UK\)|\w+)).*', '$1']
+          args: ['(?i)((?:Portuguese\s*\(Brazil\)|Portuguese\s*\(Portugal\)|Spanish\s*\(Latino\)|French\s*\(Canada\)|Chinese\s*\(Simplified\)|Chinese\s*\(Traditional\)|Norwegian\s*Bokm[aå]l|Norwegian\s*Nynorsk|English\s*\(US\)|English\s*\(GB\)|English\s*\(UK\)|\w+)).*', '$1']
         - name: re_replace
           args: ['(?i)English\s*\((?:US|GB|UK)\)', 'English']
         - name: re_replace
@@ -303,19 +311,11 @@ search:
         - name: re_replace
           args: ['\s*,\s*', ', ']
 
-    languages_title:
+    _lang_mode:
       text: '{{ .Config.title_language_mode }}'
-      filters:
-        - name: replace
-          args: ['br_en_jp', '{{ .Result.languages_title_br_en_jp }}']
-        - name: replace
-          args: ['br_en', '{{ .Result.languages_title_br_en }}']
-        - name: replace
-          args: ['br_only', '{{ .Result.languages_title_br }}']
-        - name: replace
-          args: ['all', '{{ .Result.languages_title_all }}']
-        - name: replace
-          args: ['none', '']
+
+    languages_title:
+      text: '{{ if eq .Result._lang_mode "br_en_jp" }}{{ .Result.languages_title_br_en_jp }}{{ end }}{{ if eq .Result._lang_mode "br_en" }}{{ .Result.languages_title_br_en }}{{ end }}{{ if eq .Result._lang_mode "br_only" }}{{ .Result.languages_title_br }}{{ end }}{{ if eq .Result._lang_mode "all" }}{{ .Result.languages_title_all }}{{ end }}'
 
     languages_suffix:
       text: '{{ .Result.languages_title }}'
@@ -417,3 +417,4 @@ search:
     minimumseedtime:
       # 7 days (as seconds = 7 x 24 x 60 x 60)
       text: 604800
+# json UNIT3D 9.2.0 (custom)
