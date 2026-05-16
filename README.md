@@ -86,7 +86,6 @@ Para o Radarr, recomendo usar esse custom sem RSS:
 RSS: OFF
 Automatic Search: ON
 Interactive Search: ON
-Categories: 2000
 ```
 
 ### O que essas opções significam?
