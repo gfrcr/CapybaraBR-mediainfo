@@ -61,7 +61,8 @@ Preencha sua **API key do CapybaraBR**.
 ### Languages appended to release title
 
 - Controla quais idiomas serão adicionados no título.
-- **Brazilian and English only**: mostra só Brazilian e English. Recomendado para Radarr.
+- **Brazilian, English and Japanese only**: mostra Brazilian, English e Japanese. Recomendado para Radarr/Sonarr (anime).
+- **Brazilian and English only**: mostra só Brazilian e English.
 - **Brazilian only**: mostra só Brazilian.
 - **All mapped audio languages**: mostra todos os idiomas detectados.
 - **Do not append audio languages**: não adiciona idiomas no título.
@@ -72,7 +73,7 @@ Configuração recomendada:
 Extract Mediainfo language: ON
 Extract Mediainfo language on RSS/feed: OFF
 Results per page when Mediainfo is enabled: 30
-Languages appended to release title: Brazilian and English only
+Languages appended to release title: Brazilian, English and Japanese only
 ```
 
 Clique em **Test** e depois **Save**.
