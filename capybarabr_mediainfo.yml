@@ -315,7 +315,8 @@ search:
       text: '{{ .Config.title_language_mode }}'
 
     languages_title:
-      text: '{{ if eq .Result._lang_mode "br_en_jp" }}{{ .Result.languages_title_br_en_jp }}{{ end }}{{ if eq .Result._lang_mode "br_en" }}{{ .Result.languages_title_br_en }}{{ end }}{{ if eq .Result._lang_mode "br_only" }}{{ .Result.languages_title_br }}{{ end }}{{ if eq .Result._lang_mode "all" }}{{ .Result.languages_title_all }}{{ end }}'
+      # O motor de template do Prowlarr só reconhece if com {{ else }} explícito.
+      text: '{{ if eq .Result._lang_mode "br_en_jp" }}{{ .Result.languages_title_br_en_jp }}{{ else }}{{ end }}{{ if eq .Result._lang_mode "br_en" }}{{ .Result.languages_title_br_en }}{{ else }}{{ end }}{{ if eq .Result._lang_mode "br_only" }}{{ .Result.languages_title_br }}{{ else }}{{ end }}{{ if eq .Result._lang_mode "all" }}{{ .Result.languages_title_all }}{{ else }}{{ end }}'
 
     languages_suffix:
       text: '{{ .Result.languages_title }}'
